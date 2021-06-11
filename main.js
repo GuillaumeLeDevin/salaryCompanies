@@ -1,6 +1,6 @@
 // TODO: Add your import statements here.
 import {getRoles, getCompanies} from './modules/salaryData.js';
-//import {getAverageSalaryByRole, getAverageSalaryByCompany, getSalaryAtCompany, getIndustryAverageSalary} from './modules/workAroundModule.js';
+import {getAverageSalaryByRole, getAverageSalaryByCompany, getSalaryAtCompany, getIndustryAverageSalary} from './modules/workAroundModule.js';
 // TODO: Get the companies and roles using the salaryData module.
 const companies = getCompanies();
 const roles = getRoles();
@@ -49,15 +49,16 @@ function updateResults(){
   // Get the current selected company and role from the radio button inputs.
   const company = document.querySelector("input[name='company']:checked").value;
   const role = document.querySelector("input[name='role']:checked").value;
+  const intlFormatter = new Intl.NumberFormat('fr-FR');
 
   // If either the company or role is unselected, return.
   if (!company || !role) { return; }
 
   // TODO: Use the workAroundModule functions to calculate the needed data.
-  const averageSalaryByRole = 0;
-  const averageSalaryByCompany = 0;
-  const salary = 0;
-  const industryAverageSalary = 0;
+  const averageSalaryByRole = intlFormatter.format(getAverageSalaryByRole(role));
+  const averageSalaryByCompany = intlFormatter.format(getAverageSalaryByCompany(company));
+  const salary = intlFormatter.format(getSalaryAtCompany(role, company));
+  const industryAverageSalary = intlFormatter.format(getIndustryAverageSalary());
 
   // Render them to the screen.
   document.getElementById('salarySelected').innerText = `The salary for ${role}s at ${company} is \$${salary}`;
